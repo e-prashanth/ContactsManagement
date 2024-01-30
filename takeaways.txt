@@ -1,1 +1,37 @@
 This file is a just a note book for this project in this i will have key takeaways from the project
+--> in this project we have used .env file and we define enviromental variables and to use them in the server.js
+we should download the  dotenv package and we should import the dotenv pacakge like 'require('dotenv).config()' and
+then use process.env.port or process.env.DB_NAME things like that anywhere u want 
+--> it is a convention to use env variables in uppercase.
+--> we write require('dotenv').config(); because we are just saying that not to import the entire pacakge just to
+import variables in .env file to process.env    
+--> when u write the require('dotenv').config() all the variables in the process.env object are loaded and also
+the variables defined in the .env file defined in the porject
+
+express.Router()
+--> we use express.Router to manage the routes as the project gets bigger we are going to handle 
+mutliple router for that we are going to just setup the middleware  and then add routers one by one like in the 
+project we have set up a app.use('/api',require('./routes')) so all the routes which are /api/ are handled by the 
+are defined in the  router.js file and exported here so they can be used by other files
+
+--> a middleware is indeed a function or a piece of code that is executed before the final response is sent 
+back to the client. Middleware functions have access to the request object (req), the response object (res), 
+and the next function, which is used to pass control to the next middleware in the stack.
+--> Middleware functions are applied to the request-response cycle using the app.use() method in Express. 
+They can be applied globally to all routes or selectively to specific routes.
+
+parser 
+--> parsing data is just to extract meaningfull structure from the given data 
+--> express.json() is used to say that convert the JSON into the js objects
+--> express.urlencoded({extended:true})  is used when we send form data with application/x-www-form-urlencoded  
+--> app.use(express.json()); --> tells express to parse any incoming request with a Content-Type header 
+of application/json and expose the parsed object on req.body.
+
+error handeling
+--> when we write async/await we are using the try-catch block to handel error's that are caused in the code
+and we can also use error middleware and we can also use express-async-handler package which is helpfull to 
+handle errors without using the try-catch which will automatically call the middleware while there is a error
+syntax:-
+const fun = asyncHandler(async (req,res){
+    .....
+});
