@@ -35,3 +35,12 @@ syntax:-
 const fun = asyncHandler(async (req,res){
     .....
 });
+
+
+--> we use bcrypt package to hash the password like encrypt it from plaintext to cypher text ,  then store it in db
+and convert cypher text to  plain text  
+
+--> JWT is json web token and it contains 3 parts they are 
+1) it tells about the header algorithm like what is the algo used and the type of the token 
+2) in the second piece we have the payload like the data we are sending as the payload 
+3) in the third piece we have the signature verification
