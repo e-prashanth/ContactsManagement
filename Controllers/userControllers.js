@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 const bcrypy = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const registerUser = asyncHandler(async function (req, res) {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
@@ -21,23 +21,43 @@ const registerUser = asyncHandler(async function (req, res) {
       password: hashedpassword,
     });
     if (newuser) {
-      res
-        .status(201)
-        .json({
-          message: "created the user successfully",
-          id: newuser._id,
-          username: newuser.username,
-          email: username.email,
-        });
-    }
-    else{
-        throw new  Error("Error creating a User");
+      res.status(201).json({
+        message: "created the user successfully",
+        id: newuser._id,
+        username: newuser.username,
+        email: username.email,
+      });
+    } else {
+      throw new Error("Error creating a User");
     }
   }
 });
 
 const loginUser = asyncHandler(async function (req, res) {
-  
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("All fields are mandatory!");
+  }
+  const user = await userModel.findOne({ email });
+  if (user && (await bcrypy.compare(password, user.password))) {
+    const accesToken = jwt.sign(
+      {
+        user: {
+          username: user.username,
+          id: user.id,
+          email: user.email,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECERT,
+      { expiresIn: "1h" }
+    );
+    res.status(200).json({ message: "Login successfull", accesToken });
+  }
+  else{
+    res.status(401);
+    throw new Error("Email or Password is not valid");
+  }
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
