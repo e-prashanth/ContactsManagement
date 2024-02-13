@@ -1,1 +1,1 @@
-this project is a sample project using nodejs and expressjs just for fun
+This project focuses on backend development, leveraging Node.js, Express.js, and Mongoose. It facilitates efficient contact management, allowing users to create, update, and delete contacts. Additionally, it implements private routes accessible only to the user who created the contact. Aimed at enhancing backend development skills
